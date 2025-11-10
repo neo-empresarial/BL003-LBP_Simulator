@@ -147,21 +147,59 @@ if run_button:
         col4.metric(f"Final Price ({token_b_name})", f"${final_price:,.3f}")
 
         st.subheader(f"Cumulative Proceeds ({token_b_name})")
-        st.area_chart(results_df.set_index('hour')['proceeds_cumulative_token_b'])
+
+        plot_df_proceeds = results_df.set_index('hour').rename(
+            columns={'proceeds_cumulative_token_b': f"Cumulative Proceeds ({token_b_name})"}
+        )
+        st.area_chart(plot_df_proceeds[f"Cumulative Proceeds ({token_b_name})"])
 
     with tab2:
         st.subheader(f"Price Curve ({token_b_name})")
-        st.line_chart(results_df.set_index('hour')['price'])
+        
+        plot_df_price = results_df.set_index('hour').rename(
+            columns={'price': f"Price ({token_b_name})"}
+        )
+        st.line_chart(plot_df_price[f"Price ({token_b_name})"])
+        
+        
         st.subheader(f"Hourly Demand ({token_a_name})")
-        st.bar_chart(results_df.set_index('hour')['token_a_sold'])
+        
+        plot_df_demand = results_df.set_index('hour').rename(
+            columns={'token_a_sold': f"Hourly Sold ({token_a_name})"}
+        )
+        st.bar_chart(plot_df_demand[f"Hourly Sold ({token_a_name})"])
 
     with tab3:
         st.subheader("Pool Balances")
-        st.line_chart(results_df.set_index('hour')[['token_a_balance', 'token_b_balance']])
+
+        plot_df_balances = results_df.set_index('hour').rename(columns={
+            'token_a_balance': token_a_name,
+            'token_b_balance': token_b_name
+        })
+        st.line_chart(plot_df_balances[[token_a_name, token_b_name]])
 
     with tab4:
         st.subheader("Raw Simulation Data")
-        st.dataframe(results_df.style.format(precision=2))
+
+        rename_map = {
+            'hour': 'Hour',
+            'token_a_balance': f"{token_a_name} Balance",
+            'token_b_balance': f"{token_b_name} Balance",
+            'price': f"Price ({token_b_name})",
+            'token_a_sold': f"Hourly Sold ({token_a_name})",
+            'token_a_weight':f"{token_a_name} Weight",
+            'token_b_gained':f"{token_b_name} Gained",
+            'proceeds_cumulative_token_b': f"Cumulative Proceeds ({token_b_name})",
+            'weight_a': f"{token_a_name} Weight", 
+            'weight_b': f"{token_b_name} Weight" 
+        }
+        
+        
+        display_df = results_df.rename(columns={
+            k: v for k, v in rename_map.items() if k in results_df.columns
+        })
+        
+        st.dataframe(display_df.style.format(precision=2), width="stretch")
 
 else:
     st.info("Adjust the parameters in the sidebar and click 'Run Simulation' to start.")
