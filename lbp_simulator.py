@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 
 def get_spot_price(token_a_balance, token_b_balance, token_a_weight, token_b_weight):
-    """Calcula o preço de mercado (spot price) da pool."""
+    """Calculates the pool's market price (spot price)."""
     if token_a_balance == 0 or token_b_balance == 0 or token_a_weight == 0 or token_b_weight == 0:
         return 0
     
@@ -11,8 +11,7 @@ def get_spot_price(token_a_balance, token_b_balance, token_a_weight, token_b_wei
 
 def calculate_token_a_bought(demand_token_b, token_a_balance, token_b_balance, token_a_weight, token_b_weight):
     """
-    Calcula quanto Token A é comprado por um valor em Token B (ex: USDC).
-    (Simplificação)
+Calculates how much of Token A is bought for a given amount of Token B (e.g., USDC).
     """
     price = get_spot_price(token_a_balance, token_b_balance, token_a_weight, token_b_weight)
     if price == 0:
@@ -22,7 +21,7 @@ def calculate_token_a_bought(demand_token_b, token_a_balance, token_b_balance, t
     return token_a_bought
 
 def run_simulation(params):
-    """Roda a simulação LBP hora a hora."""
+    """Runs the LBP simulation hour by hour."""
     
     hours = params['duration_hours']
     token_a_balance = params['initial_token_a']
