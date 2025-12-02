@@ -70,7 +70,7 @@ with st.sidebar.container(border=True):
     st.caption(f"Derived Start Price: **{start_price:,.4f} {token_b_name}**")
     st.caption(f"Derived End Price: **{end_price:,.4f} {token_b_name}**")
     
-    st.markdown("---")
+    st.caption("----")
     st.caption("Pool Balances:")
     
     # Pool Balances Input are also stacked vertically
