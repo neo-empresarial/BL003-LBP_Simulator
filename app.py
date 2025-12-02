@@ -43,21 +43,21 @@ with st.sidebar.container(border=True):
     st.subheader("2. Weight Derivation (FDV/Price)")
     
     total_supply = st.number_input(
-        "Token A Total Supply (for FDV)",
+        f"{token_a_name} Supply (for FDV)",
         value=100000000.0,
         min_value=1.0
     )
     
     # Inputs are now stacked vertically
     fdv_start = st.number_input(
-        "Initial FDV (in Token B / USDC)",
+        f"Initial FDV ({token_b_name})",
         value=50000000.0,
         min_value=1.0,
         help="Fully Diluted Valuation at LBP start."
     )
     
     fdv_end = st.number_input(
-        "Final FDV (in Token B / USDC)",
+        f"Final FDV ({token_b_name})",
         value=15000000.0,
         min_value=1.0,
         help="Fully Diluted Valuation at LBP end."
